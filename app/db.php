@@ -45,3 +45,25 @@ function getQuery($query){
 
   return $result;
 }
+
+function insertData($info) {
+  $connection = createDBConnection();
+
+  $values = [];
+  foreach($info as $value) {
+    $values[] = mysqli_real_escape_string($connection, $value);
+  }
+
+  $query = sprintf(
+    "INSERT INTO goods (%s) VALUES ('%s')",
+    implode(',', array_keys($info)),
+    implode("','", $values)
+  );
+
+  $insert_row = mysqli_query($connection, $query);
+  closeDBConnection($connection);
+
+  return $insert_row;
+}
+
+

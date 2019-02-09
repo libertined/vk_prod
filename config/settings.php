@@ -8,5 +8,6 @@ function getSettings()
     'db' => include(__DIR__.'/db_config.php'),
     'general' => include(__DIR__.'/general.php'),
     'list' => include(__DIR__.'/list.php'),
+    'edit' => include(__DIR__.'/edit.php'),
   ];
 }

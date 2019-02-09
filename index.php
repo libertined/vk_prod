@@ -11,7 +11,7 @@ require_once($application.'/fixtures.php');
 </head>
 <body>
   <div class="layoutCenterWrapper">
-    <?\Templates\showMenue()?>
+    <?\Templates\showMenu("\App\Goods\getMenu")?>
     <div class="main-part clearfix">
         <h1 class="main-title">Список товаров</h1>
         <?\Templates\showSort("\App\Goods\getSortSettings")?>

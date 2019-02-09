@@ -6,8 +6,20 @@ $goodInfoTitles = [
   "DESC" => "Описание",
   "PRICE" => "Цена",
 ];
-$titles = array_merge($goodInfoTitles, ["ACTIONS" => ""]);
-$editTitles = $goodInfoTitles;
+$titles = [
+  "ID" => "ID",
+  "IMG" => "Изображение",
+  "TITLE" => "Название",
+  "DESC" => "Описание",
+  "PRICE" => "Цена",
+  "ACTIONS" => ""
+];
+$editTitles = [
+  "TITLE" => "Название",
+  "DESC" => "Описание",
+  "IMG" => "Изображение",
+  "PRICE" => "Цена, ",
+];
 
 $goodsList = [
   1 => [

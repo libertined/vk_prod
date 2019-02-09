@@ -4,7 +4,15 @@ namespace App\Goods;
 
 require_once('dependences.php');
 require_once($application.'/db.php');
+require_once($application.'/util.php');
 require_once($config.'/settings.php');
+
+function getMenu()
+{
+  $config = \Config\getSettings()['list'];
+
+  return $config['menu'];
+}
 
 function getGoodsList()
 {
@@ -26,28 +34,10 @@ function getGoodsList()
 
   $items = [];
   while ($row = mysqli_fetch_assoc($result)) {
-    $items[$row["id"]] = getFormattedGoodInfo($row);
+    $items[$row["id"]] = \App\Util\getFormattedGoodInfo($row);
   }
 
   return $items;
-}
-
-function getFormattedGoodInfo($goodDBInfo)
-{
-  $config = \Config\getSettings()['general'];
-
-  return [
-    "ID" => $goodDBInfo["id"],
-    "IMG" => $config['images_path'].$goodDBInfo["image"],
-    "TITLE" => $goodDBInfo["name"],
-    "DESC" => $goodDBInfo["description"],
-    "PRICE" => calculatePrice($goodDBInfo["price"]),
-  ];
-}
-
-function calculatePrice($price)
-{
-  return (int)$price / 100;
 }
 
 function getGoodsNavigateSettings()

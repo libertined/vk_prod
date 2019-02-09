@@ -24,12 +24,18 @@ function showHeader($title = '')
   <?
 }
 
-function showMenue()
+function showMenu(callable $getMenuList)
 {
+  $list = $getMenuList();
+  if(empty($list)) {
+    return '';
+  }
   ?>
   <nav class="menu-top">
     <ul class="menu-top__list clearfix">
-      <li class="menu-top__item"><a href="edit.php">Добавить товар</a></li>
+      <?foreach ($list as $link):?>
+        <li class="menu-top__item"><a href="<?=$link['LINK']?>"><?=$link['TITLE']?></a></li>
+      <?endforeach;?>
     </ul>
   </nav>
   <?
@@ -130,17 +136,43 @@ function showEditForm($titles, $goodInfo)
     ?>
     <div class="good-edit__item">
       <p class="good-edit__item-title"><?=$name?></p>
-      <input class="good-edit__text-field" type="text" placeholder="Введите <?=$name?>" value="<?=$goodInfo[$column]?>" name="<?=$column?>"/>
+      <?=getFieldByType($column, $name, $goodInfo)?>
     </div>
   <?
   }
 }
 
-function showActionButtons()
+function getFieldByType($column, $name,  $productInfo)
+{
+  $value = (isset($productInfo[$column])) ? $productInfo[$column] : '';
+  switch($column) {
+    case 'IMG':
+      $resultStr = '';
+      if(!empty($value)) {
+        $resultStr = sprintf('<img src="%s" width="50">', $value);
+      }
+      $resultStr .= sprintf('<input name="%s" type="file" />', $column);
+      return $resultStr;
+    case 'DESC':
+      return sprintf(
+        '<textarea class="good-edit__text-desc" type="text" placeholder="Введите %s"  name="%s"/>%s</textarea>',
+        $name, $column, $value
+      );
+    default:
+      return sprintf(
+        '<input class="good-edit__text-field" type="text" placeholder="Введите %s" value="%s" name="%s"/>',
+        $name, $value, $column
+        );
+  }
+}
+
+function showActionButtons($currentGood)
 {
   ?>
-  <input class="good-edit__send" type="submit" value="Применить" name="good-edit-send">
-  <input class="good-edit__send" type="submit" value="Удалить" name="good-edit-delete">
+  <input class="good-edit__send" type="submit" value="Сохранить" name="good-edit-send">
+  <?if(!empty($currentGood)):?>
+    <input class="good-edit__send" type="submit" value="Удалить" name="good-edit-delete">
+  <?endif;?>
   <?
 }
 

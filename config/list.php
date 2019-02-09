@@ -12,5 +12,11 @@ return [
     'price_desc' => 'price_down',
     'id_asc' => 'id_up',
     'id_desc' => 'id_down',
+  ],
+  'menu' => [
+    'edit' => [
+      'LINK' => 'edit.php',
+      'TITLE' => 'Добавить товар'
+    ]
   ]
 ];
