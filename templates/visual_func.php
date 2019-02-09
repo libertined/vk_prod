@@ -50,20 +50,12 @@ function showSort($active = '')
   <?
 }
 
-function showGoodsList($goodsList)
+function showGoodsList($titles, $goodsList)
 {
   if(empty($goodsList)) {
     echo '<p>Список товаров пуст</p>';
     return;
   }
-  $titles = [
-    "ID" => "ID",
-    "IMG" => "Изображение",
-    "TITLE" => "Название",
-    "DESC" => "Описание",
-    "PRICE" => "Цена",
-    "ACTIONS" => ""
-  ];
   ?>
   <table class="goods-table" width="100%">
     <?showTitles($titles);?>
@@ -107,10 +99,39 @@ function getValueByType($column, $productInfo)
   $value = isset($productInfo[$column]) ? $productInfo[$column] : '';
   switch($column) {
     case 'IMG':
-      return '<img src="'.$value.'" width="50">';
+      return sprintf('<img src="%s" width="50">', $value);
     case 'ACTIONS':
-      return '<a href="edit.php?id='.$productInfo["ID"].'">Редактировать</a>';
+      return sprintf('<a href="edit.php?id=%s">Редактировать</a>', $productInfo["ID"]);
     default:
       return $value;
   }
+}
+
+function getTitleByGoodInfo($goodInfo)
+{
+  if(empty($goodInfo)) {
+    return 'Создать товар';
+  }
+
+  return sprintf('Редактировать товар ID %s', $goodInfo['ID']);
+}
+
+function showEditForm($titles, $goodInfo)
+{
+  foreach($titles as $column => $name) {
+    ?>
+    <div class="good-edit__item">
+      <p class="good-edit__item-title"><?=$name?></p>
+      <input class="good-edit__text-field" type="text" placeholder="Введите <?=$name?>" value="<?=$goodInfo[$column]?>" name="<?=$column?>"/>
+    </div>
+  <?
+  }
+}
+
+function showActionButtons()
+{
+  ?>
+  <input class="good-edit__send" type="submit" value="Применить" name="good-edit-send">
+  <input class="good-edit__send" type="submit" value="Удалить" name="good-edit-delete">
+  <?
 }

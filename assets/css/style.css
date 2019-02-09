@@ -43,8 +43,22 @@ html, body { padding: 0; margin: 0; font-family: Tahoma, Arial, sans-serif; colo
 
 .main-title { float: 18px; color: #000; font-weight: normal; text-decoration: underline; }
 
-/*  ТАБЛИЦА ПОЛЬЗОВАТЕЛЕЙ  */
+/*  ТАБЛИЦА ТОВАРОВ  */
 .goods-table { border-collapse: collapse; margin-bottom: 15px; }
 .goods-table__head th { padding: 10px; }
 .goods-table__row td { padding: 10px; }
 .goods-table__row:nth-child(even) { background: #cff5e2; }
+
+/*  РЕДАКТИРОВАНИЕ  */
+.good-edit { float: left; width: 100%; }
+.good-edit__form { margin: 0; width: 100%; }
+.good-edit__send { width: 120px; margin: 5px 0 5px; }
+.good-edit__item { position: relative; margin: 15px 0 10px; width: 100%; }
+.good-edit__item-title { margin: 0; color: #35c880; }
+.good-edit__item-title span { font-size: 16px; }
+.good-edit__item-title--left { margin-right: 10px; }
+.good-edit__item-title--right { margin-left: 10px; float: right; }
+.good-edit__text-field { width: 100%; box-sizing: border-box; color: #000; }
+.good-edit__text-field--small { width: 110px; }
+.good-edit__text-field--double { width: 65px; margin-left: 5px; }
+.good-edit__checkbox { margin-right: 10px; }
