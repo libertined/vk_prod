@@ -35,16 +35,24 @@ function showMenue()
   <?
 }
 
-function showSort($active = '')
+function showSort(callable  $getSortParams)
 {
-  if(empty($active)) {
-    $active = 'id';
-  }
+  $sortParams = $getSortParams();
   ?>
   <nav class="menu-top">
     <ul class="menu-top__list clearfix">
-      <li class="menu-top__item <?=(($active == 'id')? 'menu-top__item--active': '')?>"><a href="?sort=id">По ID</a></li>
-      <li class="menu-top__item <?=(($active == 'price')? 'menu-top__item--active': '')?>"><a href="?sort=price">По Цене</a></li>
+      <li class="menu-top__item <?=(($sortParams['sort_string'] == 'id_up')? 'menu-top__item--active': '')?>">
+        <a href="?sort=id_up">ID по возрастанию</a>
+      </li>
+      <li class="menu-top__item <?=(($sortParams['sort_string'] == 'id_down')? 'menu-top__item--active': '')?>">
+        <a href="?sort=id_down">ID по убыванию</a>
+      </li>
+      <li class="menu-top__item <?=(($sortParams['sort_string'] == 'price_up')? 'menu-top__item--active': '')?>">
+        <a href="?sort=price_up">Цена по возрастанию</a>
+      </li>
+      <li class="menu-top__item <?=(($sortParams['sort_string'] == 'price_down')? 'menu-top__item--active': '')?>">
+        <a href="?sort=price_down">Цена по убыванию</a>
+      </li>
     </ul>
   </nav>
   <?
@@ -134,4 +142,22 @@ function showActionButtons()
   <input class="good-edit__send" type="submit" value="Применить" name="good-edit-send">
   <input class="good-edit__send" type="submit" value="Удалить" name="good-edit-delete">
   <?
+}
+
+function showNavigate(callable  $getNavParams)
+{
+  $navParams = $getNavParams();
+  ?>
+  <nav class="menu-top">
+    <ul class="menu-top__list clearfix">
+      <?for($page = 1; $page <= $navParams['total']; $page++):?>
+        <?if($page == $navParams['page']):?>
+          <li class="menu-top__item menu-top__item--active"><span><?=$page?></span></li>
+        <?else:?>
+          <li class="menu-top__item"><a href="?page=<?=$page?>"><?=$page?></a></li>
+        <?endif;?>
+      <?endfor;?>
+    </ul>
+  </nav>
+<?
 }

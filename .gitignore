@@ -1,3 +1,4 @@
 # files
 /.idea/
 Desc.txt
+config/db_config.php
