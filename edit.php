@@ -21,7 +21,7 @@ $goodId = array_key_exists("ID", $currentGood) ? $currentGood["ID"] : "";
       <div class="error"><?=$result?></div>
     <?endif;?>
     <?if(!is_null($goodId)):?>
-    <div class="good-edit">
+    <div class="good-edit col-xs-7">
       <form class="good-edit__form" name="good-edit-form" enctype="multipart/form-data" action="" method="post" id="good-edit_form">
         <?\Templates\showEditForm("\App\Edit\getTitles", $currentGood)?>
         <?\Templates\showActionButtons($currentGood)?>

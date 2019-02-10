@@ -16,7 +16,8 @@ return [
   'menu' => [
     'edit' => [
       'LINK' => 'edit.php',
-      'TITLE' => 'Добавить товар'
+      'TITLE' => 'Добавить товар >',
+      'CLASS' => 'menu-top__item--colored'
     ]
   ],
   'titles' => [

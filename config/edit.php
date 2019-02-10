@@ -9,8 +9,8 @@ return [
   'menu' => [
     'edit' => [
       'LINK' => 'index.php',
-      'TITLE' => 'В список товаров',
-      'CLASS' => 'go-back'
+      'TITLE' => '< В список товаров',
+      'CLASS' => 'menu-top__item--colored'
     ]
   ],
   'titles' => [
