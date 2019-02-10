@@ -34,7 +34,7 @@ html, body { padding: 0; margin: 0; font-family: Tahoma, Arial, sans-serif; colo
 
 /*  ВЕРХНЕЕ МЕНЮ  */
 .menu-top { width: 100%; padding: 10px 0 10px; border-bottom: 2px solid #35c880; list-style: none; text-align: right; line-height: 0; font-size: 1px; }
-.menu-top__item { list-style: none; display: inline-block; font-size: 14px; margin: 0; margin-left: 20px; }
+.menu-top__item { list-style: none; display: inline-block; font-size: 14px; margin: 0; margin-left: 20px; line-height: 15px; }
 .menu-top__item a { color: #000; text-decoration: none; }
 .menu-top__item--active a, .menu-top__item--active span { color: #35c880; font-weight: bold; }
 

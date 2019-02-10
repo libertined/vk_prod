@@ -64,8 +64,10 @@ function showSort(callable  $getSortParams)
   <?
 }
 
-function showGoodsList($titles, $goodsList)
+function showGoodsList(callable $getTitles, $goodsList)
 {
+  $titles = $getTitles();
+
   if(empty($goodsList)) {
     echo '<p>Список товаров пуст</p>';
     return;
@@ -133,8 +135,10 @@ function getTitleByGoodInfo($goodInfo)
   return sprintf('Редактировать товар ID %s', $goodInfo['ID']);
 }
 
-function showEditForm($titles, $goodInfo)
+function showEditForm(callable $getTitles, $goodInfo)
 {
+  $titles = $getTitles();
+
   foreach($titles as $column => $name) {
     ?>
     <div class="good-edit__item">

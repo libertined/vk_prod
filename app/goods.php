@@ -182,3 +182,10 @@ function getSortSettings()
     'order' => $order
   ];
 }
+
+function getTitles()
+{
+  $config = \Config\getSettings()['list'];
+
+  return $config['titles'];
+}

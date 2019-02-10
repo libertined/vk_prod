@@ -2,7 +2,6 @@
 require_once('app/dependences.php');
 require_once($templates.'/visual_func.php');
 require_once($application.'/goods.php');
-require_once($application.'/fixtures.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +14,8 @@ require_once($application.'/fixtures.php');
     <div class="main-part clearfix">
         <h1 class="main-title">Список товаров</h1>
         <?\Templates\showSort("\App\Goods\getSortSettings")?>
-        <?\Templates\showGoodsList($titles, \App\Goods\getGoodsList())?>
+        <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings")?>
+        <?\Templates\showGoodsList("\App\Goods\getTitles", \App\Goods\getGoodsList())?>
         <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings")?>
     </div>
   </div>

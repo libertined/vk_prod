@@ -166,3 +166,10 @@ function getInfoForSave()
     'IMG' => \App\ImageUploader\uploadImage("IMG")
   ];
 }
+
+function getTitles()
+{
+  $config = \Config\getSettings()['edit'];
+
+  return $config['titles'];
+}

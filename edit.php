@@ -1,7 +1,6 @@
 <?php
 require_once('app/dependences.php');
 require_once($templates.'/visual_func.php');
-require_once($application.'/fixtures.php');
 require_once($application.'/edit.php');
 
 $result = \App\Edit\processingGoodActions($_SERVER['REQUEST_URI']);
@@ -22,7 +21,7 @@ $currentGood = \App\Edit\getGoodInfo();
     <h1 class="main-title"><?=\Templates\getTitleByGoodInfo($currentGood)?></h1>
     <div class="good-edit">
       <form class="good-edit__form" name="good-edit-form" enctype="multipart/form-data" action="" method="post" id="good-edit_form">
-        <?\Templates\showEditForm($editTitles, $currentGood)?>
+        <?\Templates\showEditForm("\App\Edit\getTitles", $currentGood)?>
         <?\Templates\showActionButtons($currentGood)?>
       </form>
     </div>
