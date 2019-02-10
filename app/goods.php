@@ -97,7 +97,7 @@ function getInfoByIds($idList)
 
 function getGoodsNavigateSettings()
 {
-  $total = getAllGoodsAmount();
+  $total = \App\Util\getAllGoodsAmount();
   if(empty($total)) {
     return [];
   }
@@ -127,25 +127,6 @@ function getPageNumber($total)
   }
 
   return $activePage;
-}
-
-function getAllGoodsAmount()
-{
-  $cachedValue = \App\Cache\getAllGoodsAmount();
-
-  if(!empty($cachedValue)) {
-    return $cachedValue;
-  }
-
-  $query = 'SELECT COUNT(id) FROM goods';
-
-  $result = \App\DB\getQuery($query);
-  $row = mysqli_fetch_assoc($result);
-  $amount = reset($row);
-
-  \App\Cache\setAllGoodsAmount($amount);
-
-  return $amount;
 }
 
 function getSortSettings()

@@ -71,3 +71,12 @@ function clearAll() {
 
   return $res;
 }
+
+function deleteByKey($key)
+{
+  $connection = createConnection();
+  $res = memcache_delete($connection, $key);
+  closeConnection($connection);
+
+  return $res;
+}

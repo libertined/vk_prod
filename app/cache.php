@@ -51,6 +51,12 @@ function getBigValueByKey($key)
   return $res;
 }
 
+function deleteByKey($key)
+{
+  $res =\App\CacheInstance\Memcached\deleteByKey($key);
+  return $res;
+}
+
 /**
  * Очищает все элементы
  * @return bool
@@ -59,6 +65,23 @@ function clearAll()
 {
   $res =\App\CacheInstance\Memcached\clearAll();
   return $res;
+}
+
+/**
+ * Очищаем все ключи, в которых определяется что находится на странице. Берем с запасом
+ * @param $pageAmount
+ */
+function deleteAllPageIdsCache($pageAmount)
+{
+  $config = \Config\getSettings()['cache'];
+  $configList = \Config\getSettings()['list'];
+
+  for($page=1; $page <= $pageAmount+1; $page++ ) {
+    foreach($configList['sort'] as $sort){
+      $key = sprintf($config['page'], $page, $sort);
+      deleteByKey($key);
+    }
+  }
 }
 
 function setAllGoodsAmount($amount)

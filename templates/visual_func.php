@@ -118,7 +118,7 @@ function getValueByType($column, $productInfo)
   switch($column) {
     case 'IMG':
       if(!empty($value)) {
-        $value = sprintf('<img src="%s" width="50">', $value);
+        $value = sprintf('<img src="%s" width="100">', $value);
       }
       return $value;
     case 'ACTIONS':
@@ -143,7 +143,7 @@ function showEditForm(callable $getTitles, $goodInfo)
 
   foreach($titles as $column => $name) {
     ?>
-    <div class="good-edit__item">
+    <div class="good-edit__item clearfix">
       <p class="good-edit__item-title"><?=$name?></p>
       <?=getFieldByType($column, $name, $goodInfo)?>
     </div>
@@ -158,8 +158,8 @@ function getFieldByType($column, $name,  $productInfo)
     case 'IMG':
       $resultStr = '';
       if(!empty($value)) {
-        $resultStr = sprintf('<img src="%s" width="50">', $value);
-        $resultStr .= '<br><label><input type="checkbox" name="DELETE_IMG" value="Y"> Удалить</label> ';
+        $resultStr = sprintf('<img src="%s" width="150" class="good-edit__image">', $value);
+        $resultStr .= '<br><label><input type="checkbox" name="DELETE_IMG" value="Y"> Удалить</label><br><br>';
       }
       $resultStr .= sprintf('<input name="%s" type="file" />', $column);
       return $resultStr;

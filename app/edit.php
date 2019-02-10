@@ -54,28 +54,35 @@ function processingGoodActions($url)
 
   $result = false;
   $link = null;
+  $clear = null;
 
   if($isSave && !empty($goodId)) {
     $result = updateGood($goodId);
     $link = sprintf('Location: %s', $url);
+    $clear = 'all';
   } elseif($isSave && empty($goodId)) {
-    $resultId = createGood();
-    if(is_int($resultId)) {
+    $result = createGood();
+    if(is_int($result)) {
       $result = true;
       $link = sprintf('Location: %s?%s=%s', $url, $config['good_code'], $result);
+      $clear = 'pages';
     }
   } elseif($isDelete && !empty($goodId)) {
     $result = deleteGood($goodId);
     if($result === true) {
       $link = sprintf('Location: index.php');
+      $clear = 'pages';
     }
   }
 
-  if($result) {
+  if($clear == 'all') {
     \App\Cache\clearAll();
+  } elseif($clear == 'pages') {
+    $pageAmount = \App\Util\getAllGoodsAmount();
+    \App\Cache\deleteAllPageIdsCache($pageAmount);
   }
 
-  if(!is_null($link)) {
+  if($result && !is_null($link)) {
     header($link);
   }
 

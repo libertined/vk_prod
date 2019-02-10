@@ -13,13 +13,13 @@ $goodId = array_key_exists("ID", $currentGood) ? $currentGood["ID"] : "";
   <?\Templates\showHeader(\Templates\getTitleByGoodInfo($currentGood))?>
 </head>
 <body>
-<?if($result !== true):?>
-  <div class="error"><?=$result?></div>
-<?endif;?>
 <div class="layoutCenterWrapper">
   <?\Templates\showMenu("\App\Edit\getMenu")?>
   <div class="main-part clearfix">
     <h1 class="main-title"><?=\Templates\getTitleByGoodInfo($currentGood)?></h1>
+    <?if($result !== true):?>
+      <div class="error"><?=$result?></div>
+    <?endif;?>
     <?if(!is_null($goodId)):?>
     <div class="good-edit">
       <form class="good-edit__form" name="good-edit-form" enctype="multipart/form-data" action="" method="post" id="good-edit_form">
