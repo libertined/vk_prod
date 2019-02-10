@@ -7,6 +7,7 @@ require_once($application.'/db.php');
 require_once($application.'/util.php');
 require_once($application.'/imageuploader.php');
 require_once($config.'/settings.php');
+require_once($application.'/cache.php');
 
 function getMenu()
 {
@@ -51,22 +52,31 @@ function processingGoodActions($url)
   $isSave = isset($_POST[$config['save_code']]);
   $isDelete = isset($_POST[$config['delete_code']]);
 
-  $result = '';
+  $result = false;
+  $link = null;
 
   if($isSave && !empty($goodId)) {
     $result = updateGood($goodId);
   } elseif($isSave && empty($goodId)) {
-    $result = createGood();
-    if(is_int($result)) {
+    $resultId = createGood();
+    if(is_int($resultId)) {
+      $result = true;
       $link = sprintf('Location: %s?%s=%s', $url, $config['good_code'], $result);
-      header($link);
     }
   } elseif($isDelete && !empty($goodId)) {
     $result = deleteGood($goodId);
     if($result === true) {
       $link = sprintf('Location: index.php');
-      header($link);
+
     }
+  }
+
+  if($result) {
+    \App\Cache\clearAll();
+  }
+
+  if(!is_null($link)) {
+    header($link);
   }
 
   return $result;

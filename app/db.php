@@ -8,7 +8,7 @@ require_once('dependences.php');
 require_once($config.'/settings.php');
 
 /**
- * Создание соединения в БД
+ * Создание соединения c БД
  * @return \mysqli
  */
 function createDBConnection()

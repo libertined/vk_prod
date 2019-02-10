@@ -2,3 +2,4 @@
 /.idea/
 Desc.txt
 config/db_config.php
+config/memcached.php

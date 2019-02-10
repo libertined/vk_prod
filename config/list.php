@@ -6,7 +6,7 @@ return [
   'gods_on_page' => 100,
   'page_code' => 'page',
   'sort_code' => 'sort',
-  'default_sort' => 'price_asc',
+  'default_sort' => 'id_up',
   'sort' => [
     'price_asc' => 'price_up',
     'price_desc' => 'price_down',

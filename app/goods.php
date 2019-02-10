@@ -5,6 +5,7 @@ namespace App\Goods;
 require_once('dependences.php');
 require_once($application.'/db.php');
 require_once($application.'/util.php');
+require_once($application.'/cache.php');
 require_once($config.'/settings.php');
 
 function getMenu()
@@ -24,8 +25,32 @@ function getGoodsList()
 
   $sortParams = getSortSettings();
 
+  $idsList = getGoodsListKeys($navParams, $sortParams);
+
+  if(empty($idsList)) {
+    return [];
+  }
+
+  $goodsInfo = getInfoByIds($idsList);
+
+  $resultList = [];
+  foreach($idsList as $id) {
+    $resultList[$id] = \App\Util\getFormattedGoodInfo($goodsInfo[$id]);
+  }
+
+  return $resultList;
+}
+
+function getGoodsListKeys($navParams, $sortParams)
+{
+  $idsList = \App\Cache\getPageIds($navParams['page'], $sortParams['sort_string']);
+
+  if(!empty($idsList)) {
+    return $idsList;
+  }
+
   $query = sprintf(
-    'SELECT * FROM goods ORDER BY %s %s LIMIT %s OFFSET %s',
+    'SELECT id FROM goods ORDER BY %s %s LIMIT %s OFFSET %s',
     $sortParams['sort'], $sortParams['order'],
     $navParams['size'], $navParams['offset']
   );
@@ -34,8 +59,38 @@ function getGoodsList()
 
   $items = [];
   while ($row = mysqli_fetch_assoc($result)) {
-    $items[$row["id"]] = \App\Util\getFormattedGoodInfo($row);
+    $items[] = $row["id"];
   }
+
+  \App\Cache\setPageIds($navParams['page'], $sortParams['sort_string'], $items);
+
+  return $items;
+}
+
+function getInfoByIds($idList)
+{
+  if(empty($idList)) {
+    return [];
+  }
+  $goodsInfo = \App\Cache\getGoodsInfoByIds($idList);
+
+  if(!empty($goodsInfo)) {
+    return $goodsInfo;
+  }
+
+  $query = sprintf(
+    'SELECT * FROM goods WHERE id IN (%s)',
+    implode(',', $idList)
+  );
+
+  $result = \App\DB\getQuery($query);
+
+  $items = [];
+  while ($row = mysqli_fetch_assoc($result)) {
+    $items[$row["id"]] = $row;
+  }
+
+  \App\Cache\setGoodsInfoByIds($items);
 
   return $items;
 }
@@ -76,23 +131,31 @@ function getPageNumber($total)
 
 function getAllGoodsAmount()
 {
+  $cachedValue = \App\Cache\getAllGoodsAmount();
+
+  if(!empty($cachedValue)) {
+    return $cachedValue;
+  }
+
   $query = 'SELECT COUNT(id) FROM goods';
 
   $result = \App\DB\getQuery($query);
-
   $row = mysqli_fetch_assoc($result);
+  $amount = reset($row);
 
-  return reset($row);
+  \App\Cache\setAllGoodsAmount($amount);
+
+  return $amount;
 }
 
 function getSortSettings()
 {
   $config = \Config\getSettings()['list'];
 
-  $sortType = (isset($_GET[$config['sort_code']]) ? htmlspecialchars($_GET[$config['sort_code']]) : $config['default_sort']);
-
-  if(!in_array($sortType, $config['sort'])) {
+  if(!isset($_GET[$config['sort_code']]) || !in_array($_GET[$config['sort_code']], $config['sort'])) {
     $sortType = $config['default_sort'];
+  } else {
+    $sortType = $_GET[$config['sort_code']];
   }
 
   switch ($sortType) {
