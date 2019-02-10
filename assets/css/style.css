@@ -64,3 +64,4 @@ html, body { padding: 0; margin: 0; font-family: Tahoma, Arial, sans-serif; colo
 .good-edit__checkbox { margin-right: 10px; }
 
 .error { color: #f00; }
+.error a { color: #f00; font-weight: bold; }

@@ -57,6 +57,7 @@ function processingGoodActions($url)
 
   if($isSave && !empty($goodId)) {
     $result = updateGood($goodId);
+    $link = sprintf('Location: %s', $url);
   } elseif($isSave && empty($goodId)) {
     $resultId = createGood();
     if(is_int($resultId)) {
@@ -67,7 +68,6 @@ function processingGoodActions($url)
     $result = deleteGood($goodId);
     if($result === true) {
       $link = sprintf('Location: index.php');
-
     }
   }
 
@@ -138,7 +138,7 @@ function updateGood($id)
 
   $result = \App\DB\updateById($id, $preparedInfo);
 
-  if($result && !empty($info['IMG'])) {
+  if($result && (!empty($info['IMG']) || $info['DELETE_IMG'])) {
     \App\ImageUploader\deleteImage($goodInfo['IMG']);
   }
 
@@ -159,11 +159,13 @@ function validate($info)
 
 function getInfoForSave()
 {
+  $deleteImage = (isset($_POST["DELETE_IMG"]) && $_POST["DELETE_IMG"] == 'Y');
   return [
     'TITLE' => htmlspecialchars($_POST["TITLE"]),
     'DESC' => htmlspecialchars($_POST["DESC"]),
     'PRICE' => htmlspecialchars($_POST["PRICE"]),
-    'IMG' => \App\ImageUploader\uploadImage("IMG")
+    'IMG' => \App\ImageUploader\uploadImage("IMG", $deleteImage),
+    'DELETE_IMG' => $deleteImage
   ];
 }
 

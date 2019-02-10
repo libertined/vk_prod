@@ -10,9 +10,11 @@ function getFormattedGoodInfo($goodDBInfo)
 {
   $config = \Config\getSettings()['general'];
 
+
+
   return [
     "ID" => $goodDBInfo["id"],
-    "IMG" => $config['images_path'].$goodDBInfo["image"],
+    "IMG" => $goodDBInfo["image"] ? $config['images_path'].$goodDBInfo["image"] : '',
     "TITLE" => $goodDBInfo["name"],
     "DESC" => $goodDBInfo["description"],
     "PRICE" => calculatePrice($goodDBInfo["price"]),
@@ -31,6 +33,10 @@ function prepareGoodInfoForDB($goodInfo)
 
   if(!empty($goodInfo["IMG"])) {
     $result["image"] = str_replace($config['image_full_path'], "", $goodInfo["IMG"]);
+  }
+
+  if($goodInfo["DELETE_IMG"]) {
+    $result["image"] = '';
   }
 
   return $result;

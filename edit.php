@@ -5,6 +5,7 @@ require_once($application.'/edit.php');
 
 $result = \App\Edit\processingGoodActions($_SERVER['REQUEST_URI']);
 $currentGood = \App\Edit\getGoodInfo();
+$goodId = array_key_exists("ID", $currentGood) ? $currentGood["ID"] : "";
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,13 +20,18 @@ $currentGood = \App\Edit\getGoodInfo();
   <?\Templates\showMenu("\App\Edit\getMenu")?>
   <div class="main-part clearfix">
     <h1 class="main-title"><?=\Templates\getTitleByGoodInfo($currentGood)?></h1>
+    <?if(!is_null($goodId)):?>
     <div class="good-edit">
       <form class="good-edit__form" name="good-edit-form" enctype="multipart/form-data" action="" method="post" id="good-edit_form">
         <?\Templates\showEditForm("\App\Edit\getTitles", $currentGood)?>
         <?\Templates\showActionButtons($currentGood)?>
       </form>
     </div>
+    <?else:?>
+      <div class="error">Такого товара нет, редактирование невозможно. Но вы можете <a href="edit.php">создать новый товар</a>.</div>
+    <?endif;?>
   </div>
 </div>
+<script src="assets/js/script.js"></script>
 </body>
 </html>

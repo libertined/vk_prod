@@ -22,8 +22,8 @@ function validate($tmpFile)
   return true;
 }
 
-function uploadImage($name){
-  if(empty($_FILES[$name])) {
+function uploadImage($name, $deleteImage = false){
+  if(empty($_FILES[$name]) || $deleteImage) {
     return null;
   }
 
@@ -59,6 +59,10 @@ function generate_image_name() {
 
 function deleteImage($url)
 {
+  if(empty($url)) {
+    return;
+  }
+
   unlink($url);
   $directory = dirname($url);
   rmdir($directory); //не пустую директорию не удалит

@@ -34,7 +34,9 @@ function showMenu(callable $getMenuList)
   <nav class="menu-top">
     <ul class="menu-top__list clearfix">
       <?foreach ($list as $link):?>
-        <li class="menu-top__item"><a href="<?=$link['LINK']?>"><?=$link['TITLE']?></a></li>
+        <li class="menu-top__item">
+          <a href="<?=$link['LINK']?>" <?if(isset($link['CLASS'])):?>class="<?=$link['CLASS']?>"<?endif;?>><?=$link['TITLE']?></a>
+        </li>
       <?endforeach;?>
     </ul>
   </nav>
@@ -157,6 +159,7 @@ function getFieldByType($column, $name,  $productInfo)
       $resultStr = '';
       if(!empty($value)) {
         $resultStr = sprintf('<img src="%s" width="50">', $value);
+        $resultStr .= '<br><label><input type="checkbox" name="DELETE_IMG" value="Y"> Удалить</label> ';
       }
       $resultStr .= sprintf('<input name="%s" type="file" />', $column);
       return $resultStr;
@@ -178,7 +181,7 @@ function showActionButtons($currentGood)
   ?>
   <input class="good-edit__send" type="submit" value="Сохранить" name="good-edit-send">
   <?if(!empty($currentGood)):?>
-    <input class="good-edit__send" type="submit" value="Удалить" name="good-edit-delete">
+    <input class="good-edit__send good-edit__delete" type="submit" value="Удалить" name="good-edit-delete">
   <?endif;?>
   <?
 }
