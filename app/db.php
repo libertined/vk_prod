@@ -60,10 +60,45 @@ function insertData($info) {
     implode("','", $values)
   );
 
-  $insert_row = mysqli_query($connection, $query);
+  mysqli_query($connection, $query);
+  $insert_row = mysqli_insert_id($connection);
   closeDBConnection($connection);
 
   return $insert_row;
 }
 
+function updateById(int $id, $info)
+{
+  $connection = createDBConnection();
+
+  $values = [];
+  foreach($info as $column => $value) {
+    $values[] = sprintf("%s='%s'", $column, mysqli_real_escape_string($connection, $value));
+  }
+
+  $id   = mysqli_real_escape_string($connection, $id);
+
+  $query = sprintf(
+    "UPDATE goods  SET %s WHERE id=%s",
+    implode(",", $values),
+    $id
+  );
+
+  $result = mysqli_query($connection, $query);
+  closeDBConnection($connection);
+
+  return $result;
+}
+
+function deleteById(int $id)
+{
+  $connection = createDBConnection();
+
+  $id   = mysqli_real_escape_string($connection, $id);
+  $query = sprintf('DELETE FROM goods WHERE id=%s', $id);
+  $result = mysqli_query($connection, $query);
+  closeDBConnection($connection);
+
+  return $result;
+}
 

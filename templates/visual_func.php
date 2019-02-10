@@ -113,7 +113,10 @@ function getValueByType($column, $productInfo)
   $value = isset($productInfo[$column]) ? $productInfo[$column] : '';
   switch($column) {
     case 'IMG':
-      return sprintf('<img src="%s" width="50">', $value);
+      if(!empty($value)) {
+        $value = sprintf('<img src="%s" width="50">', $value);
+      }
+      return $value;
     case 'ACTIONS':
       return sprintf('<a href="edit.php?id=%s">Редактировать</a>', $productInfo["ID"]);
     default:

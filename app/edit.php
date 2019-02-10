@@ -54,14 +54,19 @@ function processingGoodActions($url)
   $result = '';
 
   if($isSave && !empty($goodId)) {
-
+    $result = updateGood($goodId);
   } elseif($isSave && empty($goodId)) {
     $result = createGood();
     if(is_int($result)) {
-      header(sprintf('Location: %s?%s=%s', $url, $config['good_code'], $result));
+      $link = sprintf('Location: %s?%s=%s', $url, $config['good_code'], $result);
+      header($link);
     }
   } elseif($isDelete && !empty($goodId)) {
-
+    $result = deleteGood($goodId);
+    if($result === true) {
+      $link = sprintf('Location: index.php');
+      header($link);
+    }
   }
 
   return $result;
@@ -84,6 +89,50 @@ function createGood()
   $insertId = \App\DB\insertData($preparedInfo);
 
   return $insertId;
+}
+
+function deleteGood($id)
+{
+  $goodInfo = getGoodInfo($id);
+  if(empty($goodInfo)) {
+    return 'Товар с таким ID не найден';
+  }
+
+  if(\App\DB\deleteById($id)) {
+    \App\ImageUploader\deleteImage($goodInfo['IMG']);
+    return true;
+  };
+
+  return 'При удалении товара возникла ошибка';
+}
+
+// Вот тут могут быть конфликты, когда несколько человек редактируют одно и тоже
+function updateGood($id)
+{
+  $goodInfo = getGoodInfo($id);
+  if(empty($goodInfo)) {
+    return 'Товар с таким ID не найден';
+  }
+
+  $info = getInfoForSave();
+
+  if(validate($info) !== true) {
+    return validate($info);
+  }
+
+  if(empty($info['IMG'])) {
+    unset($info['IMG']);
+  }
+
+  $preparedInfo = \App\Util\prepareGoodInfoForDB($info);
+
+  $result = \App\DB\updateById($id, $preparedInfo);
+
+  if($result && !empty($info['IMG'])) {
+    \App\ImageUploader\deleteImage($goodInfo['IMG']);
+  }
+
+  return $result;
 }
 
 function validate($info)

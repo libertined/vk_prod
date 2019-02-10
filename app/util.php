@@ -23,12 +23,17 @@ function prepareGoodInfoForDB($goodInfo)
 {
   $config = \Config\getSettings()['general'];
 
-  return [
-    "image" => str_replace($config['image_full_path'], "", $goodInfo["IMG"]),
+  $result = [
     "name" => $goodInfo["TITLE"],
     "description" => $goodInfo["DESC"],
     "price" => calculatePriceForDB($goodInfo["PRICE"]),
   ];
+
+  if(!empty($goodInfo["IMG"])) {
+    $result["image"] = str_replace($config['image_full_path'], "", $goodInfo["IMG"]);
+  }
+
+  return $result;
 }
 
 function calculatePrice($price)

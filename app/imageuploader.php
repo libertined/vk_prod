@@ -56,3 +56,10 @@ function generate_image_name() {
     'name' => substr($name, 3),
   ];
 }
+
+function deleteImage($url)
+{
+  unlink($url);
+  $directory = dirname($url);
+  rmdir($directory); //не пустую директорию не удалит
+}

@@ -4,7 +4,7 @@ require_once($templates.'/visual_func.php');
 require_once($application.'/fixtures.php');
 require_once($application.'/edit.php');
 
-\App\Edit\processingGoodActions($_SERVER['REQUEST_URI']);
+$result = \App\Edit\processingGoodActions($_SERVER['REQUEST_URI']);
 $currentGood = \App\Edit\getGoodInfo();
 ?>
 <!DOCTYPE html>
@@ -13,6 +13,9 @@ $currentGood = \App\Edit\getGoodInfo();
   <?\Templates\showHeader(\Templates\getTitleByGoodInfo($currentGood))?>
 </head>
 <body>
+<?if($result !== true):?>
+  <div class="error"><?=$result?></div>
+<?endif;?>
 <div class="layoutCenterWrapper">
   <?\Templates\showMenu("\App\Edit\getMenu")?>
   <div class="main-part clearfix">
