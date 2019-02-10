@@ -14,9 +14,9 @@ require_once($application.'/goods.php');
     <div class="main-part clearfix">
         <h1 class="main-title">Список товаров</h1>
         <?\Templates\showSort("\App\Goods\getSortSettings")?>
-        <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings")?>
+        <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings", "\App\Goods\getSortSettings")?>
         <?\Templates\showGoodsList("\App\Goods\getTitles", \App\Goods\getGoodsList())?>
-        <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings")?>
+        <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings", "\App\Goods\getSortSettings")?>
     </div>
   </div>
 </body>

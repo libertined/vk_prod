@@ -183,9 +183,10 @@ function showActionButtons($currentGood)
   <?
 }
 
-function showNavigate(callable  $getNavParams)
+function showNavigate(callable  $getNavParams, callable $getSortParams)
 {
   $navParams = $getNavParams();
+  $sortParams = $getSortParams();
   ?>
   <nav class="menu-top">
     <ul class="menu-top__list clearfix">
@@ -193,7 +194,7 @@ function showNavigate(callable  $getNavParams)
         <?if($page == $navParams['page']):?>
           <li class="menu-top__item menu-top__item--active"><span><?=$page?></span></li>
         <?else:?>
-          <li class="menu-top__item"><a href="?page=<?=$page?>"><?=$page?></a></li>
+          <li class="menu-top__item"><a href="?page=<?=$page?>&sort=<?=$sortParams['sort_string']?>"><?=$page?></a></li>
         <?endif;?>
       <?endfor;?>
     </ul>
