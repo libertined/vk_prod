@@ -54,34 +54,27 @@ function processingGoodActions($url)
 
   $result = false;
   $link = null;
-  $clear = null;
 
   if($isSave && !empty($goodId)) {
     $result = updateGood($goodId);
     if($result === true) {
       $link = sprintf('Location: %s', $url);
-      $clear = 'all';
     }
   } elseif($isSave && empty($goodId)) {
     $result = createGood();
     if(is_int($result)) {
       $result = true;
       $link = sprintf('Location: %s?%s=%s', $url, $config['good_code'], $result);
-      $clear = 'pages';
     }
   } elseif($isDelete && !empty($goodId)) {
     $result = deleteGood($goodId);
     if($result === true) {
       $link = sprintf('Location: index.php');
-      $clear = 'pages';
     }
   }
 
-  if($clear == 'all') {
+  if($result) {
     \App\Cache\clearAll();
-  } elseif($clear == 'pages') {
-    $pageAmount = \App\Util\getAllGoodsAmount();
-    \App\Cache\deleteAllPageIdsCache($pageAmount);
   }
 
   if($result && !is_null($link)) {
@@ -160,7 +153,7 @@ function updateGood($id)
 
 function isChanged($goodInfo)
 {
-  if(strtotime($goodInfo['MODIFIED']) >= htmlspecialchars($_POST['SHOW_TIME'])) {
+  if(strtotime($goodInfo['MODIFIED']) > htmlspecialchars($_POST['SHOW_TIME'])) {
     return true;
   }
   return false;
@@ -184,7 +177,7 @@ function getInfoForSave()
   return [
     'TITLE' => htmlspecialchars($_POST["TITLE"]),
     'DESC' => htmlspecialchars($_POST["DESC"]),
-    'PRICE' => htmlspecialchars($_POST["PRICE"]),
+    'PRICE' => \App\Util\clean_price(htmlspecialchars($_POST["PRICE"])),
     'IMG' => \App\ImageUploader\uploadImage("IMG", $deleteImage),
     'DELETE_IMG' => $deleteImage
   ];

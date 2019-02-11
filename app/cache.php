@@ -67,23 +67,6 @@ function clearAll()
   return $res;
 }
 
-/**
- * Очищаем все ключи, в которых определяется что находится на странице. Берем с запасом
- * @param $pageAmount
- */
-function deleteAllPageIdsCache($pageAmount)
-{
-  $config = \Config\getSettings()['cache'];
-  $configList = \Config\getSettings()['list'];
-
-  for($page=1; $page <= $pageAmount+1; $page++ ) {
-    foreach($configList['sort'] as $sort){
-      $key = sprintf($config['page'], $page, $sort);
-      deleteByKey($key);
-    }
-  }
-}
-
 function setAllGoodsAmount($amount)
 {
   $config = \Config\getSettings()['cache'];
