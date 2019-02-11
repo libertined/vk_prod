@@ -17,6 +17,7 @@ function getFormattedGoodInfo($goodDBInfo)
     "TITLE" => $goodDBInfo["name"],
     "DESC" => $goodDBInfo["description"],
     "PRICE" => calculatePrice($goodDBInfo["price"]),
+    "MODIFIED" => $goodDBInfo["modified"],
   ];
 }
 

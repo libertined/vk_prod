@@ -118,7 +118,7 @@ function getGoodsNavigateSettings()
 function getPageNumber($total)
 {
   $config = \Config\getSettings()['list'];
-  $activePage = (int)(isset($_GET[$config['page_code']]) ? $_GET[$config['page_code']] : 1);
+  $activePage = (int)($_GET[$config['page_code']] ?? 1);
 
   if(empty($activePage) || $activePage < 1) {
     $activePage = 1;

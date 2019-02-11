@@ -114,7 +114,7 @@ function showTableRows($goodsList, $columns)
 
 function getValueByType($column, $productInfo)
 {
-  $value = isset($productInfo[$column]) ? $productInfo[$column] : '';
+  $value = $productInfo[$column] ?? '';
   switch($column) {
     case 'IMG':
       if(!empty($value)) {
@@ -140,20 +140,20 @@ function getTitleByGoodInfo($goodInfo)
 function showEditForm(callable $getTitles, $goodInfo)
 {
   $titles = $getTitles();
-
-  foreach($titles as $column => $name) {
     ?>
+  <?foreach($titles as $column => $name):?>
     <div class="good-edit__item clearfix">
       <p class="good-edit__item-title"><?=$name?></p>
       <?=getFieldByType($column, $name, $goodInfo)?>
     </div>
+  <?endforeach;?>
+  <input type="hidden" name="SHOW_TIME" value="<?=time()?>">
   <?
-  }
 }
 
 function getFieldByType($column, $name,  $productInfo)
 {
-  $value = (isset($productInfo[$column])) ? $productInfo[$column] : '';
+  $value = $productInfo[$column] ?? '';
   switch($column) {
     case 'IMG':
       $resultStr = '';

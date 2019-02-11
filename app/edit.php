@@ -58,8 +58,10 @@ function processingGoodActions($url)
 
   if($isSave && !empty($goodId)) {
     $result = updateGood($goodId);
-    $link = sprintf('Location: %s', $url);
-    $clear = 'all';
+    if($result === true) {
+      $link = sprintf('Location: %s', $url);
+      $clear = 'all';
+    }
   } elseif($isSave && empty($goodId)) {
     $result = createGood();
     if(is_int($result)) {
@@ -131,6 +133,10 @@ function updateGood($id)
     return 'Товар с таким ID не найден';
   }
 
+  if(isChanged($goodInfo)) {
+    return 'С момента открытия карточки товар был изменен. Если все еще хотите его отредактировать, внесите ваши изменения повторно.';
+  }
+
   $info = getInfoForSave();
 
   if(validate($info) !== true) {
@@ -150,6 +156,14 @@ function updateGood($id)
   }
 
   return $result;
+}
+
+function isChanged($goodInfo)
+{
+  if(strtotime($goodInfo['MODIFIED']) >= htmlspecialchars($_POST['SHOW_TIME'])) {
+    return true;
+  }
+  return false;
 }
 
 function validate($info)
