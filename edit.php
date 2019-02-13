@@ -3,6 +3,8 @@ require_once('app/dependences.php');
 require_once($templates.'/visual_func.php');
 require_once($application.'/edit.php');
 
+\App\Util\prolog();
+
 $result = \App\Edit\processingGoodActions($_SERVER['REQUEST_URI']);
 $currentGood = \App\Edit\getGoodInfo();
 $goodId = array_key_exists("ID", $currentGood) ? $currentGood["ID"] : "";

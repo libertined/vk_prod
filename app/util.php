@@ -5,6 +5,7 @@ namespace App\Util;
 require_once('dependences.php');
 require_once($application.'/db.php');
 require_once($application.'/cache.php');
+require_once($application.'/pagesettings.php');
 require_once($config.'/settings.php');
 
 function getFormattedGoodInfo($goodDBInfo)
@@ -103,4 +104,21 @@ function getAllGoodsAmount()
   \App\Cache\setAllGoodsAmount($amount);
 
   return $amount;
+}
+
+function prolog()
+{
+  session_start();
+}
+
+function setCurrentPageSettings()
+{
+  $config = \Config\getSettings()['general'];
+  \App\PageSettings\setSettings($config['currentListLink'], $_SERVER['REQUEST_URI']);
+}
+
+function getCurrentPageSettings()
+{
+  $config = \Config\getSettings()['general'];
+  return \App\PageSettings\getSettings($config['currentListLink']);
 }

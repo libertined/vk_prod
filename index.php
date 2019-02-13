@@ -2,6 +2,10 @@
 require_once('app/dependences.php');
 require_once($templates.'/visual_func.php');
 require_once($application.'/goods.php');
+require_once($application.'/util.php');
+
+\App\Util\prolog();
+\App\Util\setCurrentPageSettings();
 ?>
 <!DOCTYPE html>
 <html>

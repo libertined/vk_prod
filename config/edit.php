@@ -7,7 +7,7 @@ return [
   'save_code' => 'good-edit-send',
   'delete_code' => 'good-edit-delete',
   'menu' => [
-    'edit' => [
+    'back' => [
       'LINK' => 'index.php',
       'TITLE' => '< В список товаров',
       'CLASS' => 'menu-top__item--colored'

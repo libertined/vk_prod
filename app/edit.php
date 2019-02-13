@@ -6,12 +6,16 @@ require_once('dependences.php');
 require_once($application.'/db.php');
 require_once($application.'/util.php');
 require_once($application.'/imageuploader.php');
-require_once($config.'/settings.php');
+require_once($application.'/pagesettings.php');
 require_once($application.'/cache.php');
+require_once($config.'/settings.php');
 
 function getMenu()
 {
   $config = \Config\getSettings()['edit'];
+
+  $backPage = \App\Util\getCurrentPageSettings();
+  $config['menu']['back']['LINK'] = !empty($backPage) ? $backPage : $config['menu']['back']['LINK'];
 
   return $config['menu'];
 }
@@ -63,8 +67,9 @@ function processingGoodActions($url)
   } elseif($isSave && empty($goodId)) {
     $result = createGood();
     if(is_int($result)) {
-      $result = true;
       $link = sprintf('Location: %s?%s=%s', $url, $config['good_code'], $result);
+      $result = true;
+      \App\PageSettings\clearSettings();
     }
   } elseif($isDelete && !empty($goodId)) {
     $result = deleteGood($goodId);

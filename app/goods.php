@@ -193,6 +193,14 @@ function getPagination()
     }
   }
 
+  if($config['pagination']['showLast'] && !isset($result[$navParams['total']])) {
+    $result[$navParams['total']] = [
+      'PAGE' => $navParams['total'],
+      'LINK' => sprintf('?page=%s&sort=%s', $navParams['total'], $sortParams['sort_string']),
+      'ACTIVE' => false
+    ];
+  }
+
   if($config['pagination']['showFirst'] && !isset($result[1])) {
     $curPage = [
       1 => [
@@ -201,14 +209,6 @@ function getPagination()
         'ACTIVE' => false
     ]];
     $result = array_merge($curPage, $result);
-  }
-
-  if($config['pagination']['showLast'] && !isset($result[$navParams['total']])) {
-    $result[$navParams['total']] = [
-      'PAGE' => $navParams['total'],
-      'LINK' => sprintf('?page=%s&sort=%s', $navParams['total'], $sortParams['sort_string']),
-      'ACTIVE' => false
-    ];
   }
 
   return $result;

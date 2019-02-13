@@ -7,4 +7,5 @@ return [
   'image_full_path' => dirname(__DIR__, 1).'/assets/images/',
   'image_types' => ['image/gif', 'image/png', 'image/jpeg'],
   'image_size' => 1024000,
+  'currentListLink' => 'currentLink'
 ];
