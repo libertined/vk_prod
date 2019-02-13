@@ -135,11 +135,13 @@ function updateGood($id)
     return 'Товар с таким ID не найден';
   }
 
-  if(isChanged($goodInfo)) {
-    return 'С момента открытия карточки товар был изменен. Если все еще хотите его отредактировать, внесите ваши изменения повторно.';
-  }
-
   $info = getInfoForSave();
+
+  if(isChanged($goodInfo)) {
+    $fieldsDiff = getChangedFields($goodInfo, $info);
+    return 'С момента открытия карточки товар был изменен. Если все еще хотите его отредактировать, внесите ваши изменения повторно.<br>'
+            .implode('<br>', $fieldsDiff);
+  }
 
   if(validate($info) !== true) {
     return validate($info);
@@ -158,6 +160,22 @@ function updateGood($id)
   }
 
   return $result;
+}
+
+function getChangedFields($oldFields, $newFields)
+{
+  $info['PRICE'] = \App\Util\clean_price($newFields['PRICE']);
+  $oldFields['PRICE'] = \App\Util\clean_price($oldFields['PRICE']);
+  $diff = [];
+  foreach($newFields as $key => $value) {
+    if(!isset($oldFields[$key])) {
+      continue;
+    }
+    if($value != $oldFields[$key]) {
+      $diff[$key] = sprintf('Сохраненное значение:%s - Введенное значение:%s', $oldFields[$key], $value);
+    }
+  }
+  return $diff;
 }
 
 function isChanged($goodInfo)

@@ -26,9 +26,14 @@ function getFormattedGoodInfo($goodDBInfo)
     "IMG" => $goodDBInfo["image"] ? $config['images_path'].$goodDBInfo["image"] : '',
     "TITLE" => $goodDBInfo["name"],
     "DESC" => $goodDBInfo["description"],
-    "PRICE" => number_format(calculatePrice($goodDBInfo["price"]), 2, '.', ' '),
+    "PRICE" => getFormattedPrice(calculatePrice($goodDBInfo["price"])),
     "MODIFIED" => $goodDBInfo["modified"],
   ];
+}
+
+function getFormattedPrice($price)
+{
+  return number_format($price, 2, '.', ' ');
 }
 
 /**
