@@ -1,10 +1,12 @@
 <?php
-
-namespace Templates;
 /**
  * Функции связанные с визуализацией информации
  */
+
+namespace Templates;
+
 /**
+ * Вывод хедера
  * @param string $title
  */
 function showHeader($title = '')
@@ -24,6 +26,11 @@ function showHeader($title = '')
   <?
 }
 
+/**
+ * Отображение меню
+ * @param callable $getMenuList
+ * @return string
+ */
 function showMenu(callable $getMenuList)
 {
   $list = $getMenuList();
@@ -43,6 +50,10 @@ function showMenu(callable $getMenuList)
   <?
 }
 
+/**
+ * Отображение сортировки
+ * @param callable $getSortParams
+ */
 function showSort(callable  $getSortParams)
 {
   $sortParams = $getSortParams();
@@ -66,6 +77,11 @@ function showSort(callable  $getSortParams)
   <?
 }
 
+/**
+ * Отображение товарного листинга в виде таблицы
+ * @param callable $getTitles
+ * @param $goodsList
+ */
 function showGoodsList(callable $getTitles, $goodsList)
 {
   $titles = $getTitles();
@@ -82,6 +98,10 @@ function showGoodsList(callable $getTitles, $goodsList)
   <?
 }
 
+/**
+ * Вывод заголовков таблицы
+ * @param null $titles
+ */
 function showTitles($titles = null)
 {
   if(empty($titles)) {
@@ -96,6 +116,11 @@ function showTitles($titles = null)
   <?
 }
 
+/**
+ * Вывод табличных данных
+ * @param $goodsList
+ * @param $columns
+ */
 function showTableRows($goodsList, $columns)
 {
   if(empty($goodsList) || empty($columns)) {
@@ -112,6 +137,12 @@ function showTableRows($goodsList, $columns)
   <?
 }
 
+/**
+ * Вывод данных в зависимости от типа
+ * @param $column
+ * @param $productInfo
+ * @return string
+ */
 function getValueByType($column, $productInfo)
 {
   $value = $productInfo[$column] ?? '';
@@ -128,6 +159,11 @@ function getValueByType($column, $productInfo)
   }
 }
 
+/**
+ * Отображение заголовка страницы редактирования/создания товара
+ * @param $goodInfo
+ * @return string
+ */
 function getTitleByGoodInfo($goodInfo)
 {
   if(empty($goodInfo)) {
@@ -137,6 +173,11 @@ function getTitleByGoodInfo($goodInfo)
   return sprintf('Редактировать товар ID %s', $goodInfo['ID']);
 }
 
+/**
+ * Поля для формы редактирования товара
+ * @param callable $getTitles
+ * @param $goodInfo
+ */
 function showEditForm(callable $getTitles, $goodInfo)
 {
   $titles = $getTitles();
@@ -151,6 +192,13 @@ function showEditForm(callable $getTitles, $goodInfo)
   <?
 }
 
+/**
+ * Вывод поля редактирования в зависимости от типа
+ * @param $column
+ * @param $name
+ * @param $productInfo
+ * @return string
+ */
 function getFieldByType($column, $name,  $productInfo)
 {
   $value = $productInfo[$column] ?? '';
@@ -176,6 +224,10 @@ function getFieldByType($column, $name,  $productInfo)
   }
 }
 
+/**
+ * Вывод возможных действий с формой
+ * @param $currentGood
+ */
 function showActionButtons($currentGood)
 {
   ?>
@@ -186,6 +238,11 @@ function showActionButtons($currentGood)
   <?
 }
 
+/**
+ * Отображение всех возможных страни для пагинации
+ * @param callable $getNavParams
+ * @param callable $getSortParams
+ */
 function showFullNavigate(callable  $getNavParams, callable $getSortParams)
 {
   $navParams = $getNavParams();
@@ -205,6 +262,10 @@ function showFullNavigate(callable  $getNavParams, callable $getSortParams)
 <?
 }
 
+/**
+ * Отображение пагинации на основе переданного массива с данными
+ * @param callable $getPagination
+ */
 function showNavigate(callable  $getPagination)
 {
   $pagination = $getPagination();

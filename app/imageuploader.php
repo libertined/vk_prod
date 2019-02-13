@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Функции для работы с загрузкой и обработкой изображений
+ */
+
 namespace App\ImageUploader;
 
 require_once('dependences.php');

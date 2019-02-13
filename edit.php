@@ -20,6 +20,7 @@ $goodId = array_key_exists("ID", $currentGood) ? $currentGood["ID"] : "";
   <div class="main-part clearfix">
     <h1 class="main-title"><?=\Templates\getTitleByGoodInfo($currentGood)?></h1>
     <?if($result !== true):?>
+      <?$currentGood = \App\Edit\getInfoForSave()?>
       <div class="error"><?=$result?></div>
     <?endif;?>
     <?if(!is_null($goodId)):?>

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Общий файл с конфигурацией
+ */
 namespace Config;
 
 function getSettings()

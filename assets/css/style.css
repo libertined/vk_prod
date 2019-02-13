@@ -55,6 +55,7 @@ html, body { padding: 0; margin: 0; font-family: Tahoma, Arial, sans-serif; colo
 .goods-table__row td { padding: 10px; }
 .goods-table__row:nth-child(even) { background: #f0f2f5; }
 .goods-table__row td a { color: #2a5885; }
+.goods-table__price { white-space: nowrap; }
 
 /*  РЕДАКТИРОВАНИЕ  */
 .good-edit { float: left; }

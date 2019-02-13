@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Функции для работы с настройками страниц, сессиями, куками
+ */
+
 namespace App\PageSettings;
 
 require_once('dependences.php');

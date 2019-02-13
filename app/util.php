@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Функции общего назначения
+ */
+
 namespace App\Util;
 
 require_once('dependences.php');
@@ -8,6 +12,11 @@ require_once($application.'/cache.php');
 require_once($application.'/pagesettings.php');
 require_once($config.'/settings.php');
 
+/**
+ * Форматированный вид информации по товару
+ * @param $goodDBInfo
+ * @return array
+ */
 function getFormattedGoodInfo($goodDBInfo)
 {
   $config = \Config\getSettings()['general'];
@@ -17,11 +26,16 @@ function getFormattedGoodInfo($goodDBInfo)
     "IMG" => $goodDBInfo["image"] ? $config['images_path'].$goodDBInfo["image"] : '',
     "TITLE" => $goodDBInfo["name"],
     "DESC" => $goodDBInfo["description"],
-    "PRICE" => calculatePrice($goodDBInfo["price"]),
+    "PRICE" => number_format(calculatePrice($goodDBInfo["price"]), 2, '.', ' '),
     "MODIFIED" => $goodDBInfo["modified"],
   ];
 }
 
+/**
+ * Подготовленная для вставки в базу информация по товару
+ * @param $goodInfo
+ * @return array
+ */
 function prepareGoodInfoForDB($goodInfo)
 {
   $config = \Config\getSettings()['general'];
@@ -43,17 +57,33 @@ function prepareGoodInfoForDB($goodInfo)
   return $result;
 }
 
+/**
+ * Рассчет цены, после получения данных из базы
+ * @param $price
+ * @return string
+ */
 function calculatePrice($price)
 {
   return substr($price, 0, -2).".".substr($price, -2);
 }
 
+/**
+ * Рассчет цены для сохранения данных в базу
+ * @param $price
+ * @return int
+ */
 function calculatePriceForDB($price)
 {
   $price = explode('.',  $price);
   return (int)$price[0] * 100 + (int)$price[1];
 }
 
+/**
+ * Приведение цены к корректному виду
+ * @param $value
+ * @param string $default
+ * @return int|mixed|string
+ */
 function clean_price($value, $default = '')
 {
   $value = mb_ereg_replace('[^0-9.,]', '', $value);

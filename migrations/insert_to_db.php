@@ -1,4 +1,7 @@
 <?php
+/**
+ * Скрипт для заполнения таблицы с товарами тестовыми данными
+ */
 require_once('../app/dependences.php');
 require_once($application.'/fixtures.php');
 require_once($application.'/db.php');

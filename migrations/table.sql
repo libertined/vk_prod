@@ -1,3 +1,4 @@
+/* Основная таблица */
 CREATE TABLE IF NOT EXISTS `goods` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,

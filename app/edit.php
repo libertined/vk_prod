@@ -56,7 +56,11 @@ function processingGoodActions($url)
   $isSave = isset($_POST[$config['save_code']]);
   $isDelete = isset($_POST[$config['delete_code']]);
 
-  $result = false;
+  if(!$isSave && !$isDelete) {
+    return true;
+  }
+
+  $result = null;
   $link = null;
 
   if($isSave && !empty($goodId)) {
