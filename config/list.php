@@ -27,5 +27,11 @@ return [
     "DESC" => "Описание",
     "PRICE" => "Цена",
     "ACTIONS" => ""
-  ]
+  ],
+  'pagination' => [
+    "left" => 3,
+    "right" => 3,
+    "showFirst" => true,
+    "showLast" => true,
+  ],
 ];

@@ -186,7 +186,7 @@ function showActionButtons($currentGood)
   <?
 }
 
-function showNavigate(callable  $getNavParams, callable $getSortParams)
+function showFullNavigate(callable  $getNavParams, callable $getSortParams)
 {
   $navParams = $getNavParams();
   $sortParams = $getSortParams();
@@ -200,6 +200,29 @@ function showNavigate(callable  $getNavParams, callable $getSortParams)
           <li class="menu-top__item"><a href="?page=<?=$page?>&sort=<?=$sortParams['sort_string']?>"><?=$page?></a></li>
         <?endif;?>
       <?endfor;?>
+    </ul>
+  </nav>
+<?
+}
+
+function showNavigate(callable  $getPagination)
+{
+  $pagination = $getPagination();
+  ?>
+  <nav class="menu-top">
+    <ul class="menu-top__list clearfix">
+      <?$prevPage = 0;?>
+      <?foreach($pagination as $page):?>
+        <?if($page['PAGE']-$prevPage>1):?>
+          <li class="menu-top__item"><span class="more">...</span></li>
+        <?endif?>
+        <?$prevPage = $page['PAGE']?>
+        <?if($page['ACTIVE']):?>
+          <li class="menu-top__item menu-top__item--active"><span><?=$page['PAGE']?></span></li>
+        <?else:?>
+          <li class="menu-top__item"><a href="<?=$page['LINK']?>"><?=$page['PAGE']?></a></li>
+        <?endif;?>
+      <?endforeach;?>
     </ul>
   </nav>
 <?

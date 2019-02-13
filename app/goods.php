@@ -170,3 +170,46 @@ function getTitles()
 
   return $config['titles'];
 }
+
+function getPagination()
+{
+  $navParams = getGoodsNavigateSettings();
+  $sortParams = getSortSettings();
+
+  $config = \Config\getSettings()['list'];
+
+  $left = max($navParams['page'] - $config['pagination']['left'], 1);
+  $right = min($navParams['page'] + $config['pagination']['right'], $navParams['total']);
+
+  $result = [];
+  for($page = $left; $page <= $right; $page++) {
+    $result[$page] = [
+      'PAGE' => $page,
+      'LINK' => sprintf('?page=%s&sort=%s', $page, $sortParams['sort_string']),
+      'ACTIVE' => false
+    ];
+    if($page == $navParams['page']) {
+      $result[$page]['ACTIVE'] = true;
+    }
+  }
+
+  if($config['pagination']['showFirst'] && !isset($result[1])) {
+    $curPage = [
+      1 => [
+      'PAGE' => 1,
+      'LINK' => sprintf('?page=%s&sort=%s', 1, $sortParams['sort_string']),
+        'ACTIVE' => false
+    ]];
+    $result = array_merge($curPage, $result);
+  }
+
+  if($config['pagination']['showLast'] && !isset($result[$navParams['total']])) {
+    $result[$navParams['total']] = [
+      'PAGE' => $navParams['total'],
+      'LINK' => sprintf('?page=%s&sort=%s', $navParams['total'], $sortParams['sort_string']),
+      'ACTIVE' => false
+    ];
+  }
+
+  return $result;
+}

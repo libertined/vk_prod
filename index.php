@@ -14,12 +14,12 @@ require_once($application.'/goods.php');
     <div class="main-part clearfix">
         <h1 class="main-title">Список товаров</h1>
         <?\Templates\showSort("\App\Goods\getSortSettings")?>
+        <?\Templates\showNavigate("\App\Goods\getPagination")?>
+        <?\Templates\showGoodsList("\App\Goods\getTitles", \App\Goods\getGoodsList())?>
         <div class="minimize-block">
           <span class="minimize-block__link">Развернуть</span>
-          <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings", "\App\Goods\getSortSettings")?>
+          <?\Templates\showFullNavigate("\App\Goods\getGoodsNavigateSettings", "\App\Goods\getSortSettings")?>
         </div>
-        <?\Templates\showGoodsList("\App\Goods\getTitles", \App\Goods\getGoodsList())?>
-        <?\Templates\showNavigate("\App\Goods\getGoodsNavigateSettings", "\App\Goods\getSortSettings")?>
     </div>
   </div>
 <script src="assets/js/script.js"></script>
