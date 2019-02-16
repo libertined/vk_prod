@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Работа с кэшированием
  */
@@ -118,9 +119,15 @@ function setPageIds(int $pageNumber, string $sort, $idsList) {
   return setValueByKey($key, $ids);
 }
 
+/**
+ * Кэшировать большие объемы сысла нет, нагрузку держит и без кэширования. Если будет плохо базе, можно добавить другой вид кэширования, поэтому
+ * метод есть, но он по факту не нужен
+ * @param $ids
+ * @return array|bool|void
+ */
 function getGoodsInfoByIds($ids)
 {
-  if(empty($ids)) {
+  if(true || empty($ids)) {
     return true;
   }
 
@@ -137,10 +144,15 @@ function getGoodsInfoByIds($ids)
   return $result;
 }
 
+/**
+ * Кэширование отключено, чтобы не засорять небольшой кэш
+ * @param $info
+ * @return bool|void
+ */
 function setGoodsInfoByIds($info) {
   $keys = array_keys($info);
 
-  if(empty($keys)) {
+  if(true || empty($keys)) {
     return true;
   }
 

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Товарный листинг
+ */
+
 namespace App\Goods;
 
 require_once('dependences.php');

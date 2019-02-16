@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Форма редактирования
+ */
+
 namespace App\Edit;
 
 require_once('dependences.php');
