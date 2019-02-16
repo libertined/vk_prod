@@ -70,6 +70,7 @@ html, body { padding: 0; margin: 0; font-family: Tahoma, Arial, sans-serif; colo
 .good-edit__text-desc {width: 100%; box-sizing: border-box; color: #000; height: 50px}
 .good-edit__checkbox { margin-right: 10px; }
 .good-edit__image { float: left; margin-right: 20px; }
+.good-edit__who_is { display: none; }
 
 .error { color: #f00; }
 .error a { color: #f00; font-weight: bold; }

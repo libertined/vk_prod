@@ -157,3 +157,16 @@ function getCurrentPageSettings()
   $config = \Config\getSettings()['general'];
   return \App\PageSettings\getSettings($config['currentListLink']);
 }
+
+function isExistArrayElementInStr($value, $array)
+{
+  if(!is_array($array)) {
+    return false;
+  }
+  foreach ($array as $element) {
+    if (strpos($value, $element) !== false) {
+      return true;
+    }
+  }
+  return false;
+}

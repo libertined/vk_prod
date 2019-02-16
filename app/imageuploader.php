@@ -15,7 +15,14 @@ function validate($tmpFile)
 {
   $config = \Config\getSettings()['general'];
 
-  if(!in_array($tmpFile['type'], $config['image_types'])) {
+  if ($tmpFile['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($tmpFile['tmp_name'])) {
+    return null;
+  }
+
+  $fInfo = finfo_open(FILEINFO_MIME);
+  $mime = (string) finfo_file($fInfo, $tmpFile['tmp_name']);
+
+  if(!$fInfo || !\App\Util\isExistArrayElementInStr($mime, $config['image_types'])) {
     return null;
   }
 
@@ -35,6 +42,8 @@ function uploadImage($name, $deleteImage = false){
     return null;
   }
 
+  $filePath = $_FILES[$name]['tmp_name'];
+
   $fileName = generate_image_name();
 
   $config = \Config\getSettings()['general'];
@@ -44,12 +53,13 @@ function uploadImage($name, $deleteImage = false){
     mkdir($fileName["full_dir"], 0777, true);
   }
 
-  $path_parts = pathinfo($_FILES[$name]['tmp_name'].'/'.$_FILES[$name]['name']);
+  $imageInfo = getimagesize($filePath);
+  $extension = image_type_to_extension($imageInfo[2]);
 
-  $imagePath = sprintf("%s/%s.%s", $fileName["full_dir"], $fileName["name"], $path_parts['extension']);
-  $savePath = sprintf("%s/%s.%s", $fileName["dir"], $fileName["name"], $path_parts['extension']);
+  $imagePath = sprintf("%s/%s.%s", $fileName["full_dir"], $fileName["name"], $extension);
+  $savePath = sprintf("%s/%s.%s", $fileName["dir"], $fileName["name"], $extension);
 
-  if (move_uploaded_file($_FILES[$name]['tmp_name'], $imagePath)) return $savePath;
+  if (move_uploaded_file($filePath, $imagePath)) return $savePath;
   return null;
 }
 

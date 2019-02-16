@@ -188,7 +188,17 @@ function showEditForm(callable $getTitles, $goodInfo)
       <?=getFieldByType($column, $name, $goodInfo)?>
     </div>
   <?endforeach;?>
+  <?
+  showSafetyElements();
+}
+
+function showSafetyElements()
+{
+  $sessionCode = md5(session_id());
+  ?>
   <input type="hidden" name="SHOW_TIME" value="<?=time()?>">
+  <input type="hidden" name="SES_CODE" value="<?=$sessionCode?>">
+  <input type="text" name="NAME" value="" class="good-edit__who_is">
   <?
 }
 

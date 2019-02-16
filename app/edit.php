@@ -195,6 +195,15 @@ function validate($info)
     return 'Не задана цена';
   }
 
+  $sessionCode = md5(session_id());
+  if($sessionCode != $info['SES_CODE']) {
+    return 'Попытка передачи данных с другого хоста.';
+  }
+
+  if(!empty($info['NAME'])) {
+    return 'А не бот ли вы, батенька?';
+  }
+
   return true;
 }
 
@@ -206,7 +215,9 @@ function getInfoForSave()
     'DESC' => htmlspecialchars($_POST["DESC"]),
     'PRICE' => \App\Util\clean_price(htmlspecialchars($_POST["PRICE"])),
     'IMG' => \App\ImageUploader\uploadImage("IMG", $deleteImage),
-    'DELETE_IMG' => $deleteImage
+    'DELETE_IMG' => $deleteImage,
+    'SES_CODE' => htmlspecialchars($_POST["SES_CODE"]),
+    'NAME' => htmlspecialchars($_POST["NAME"]),
   ];
 }
 
