@@ -76,11 +76,11 @@ function getInfoByIds($idList)
   if(empty($idList)) {
     return [];
   }
-  $goodsInfo = \App\Cache\getGoodsInfoByIds($idList);
+  /*$goodsInfo = \App\Cache\getGoodsInfoByIds($idList);
 
   if(!empty($goodsInfo)) {
     return $goodsInfo;
-  }
+  }*/
 
   $query = sprintf(
     'SELECT * FROM goods WHERE id IN (%s)',
@@ -94,7 +94,7 @@ function getInfoByIds($idList)
     $items[$row["id"]] = $row;
   }
 
-  \App\Cache\setGoodsInfoByIds($items);
+  //\App\Cache\setGoodsInfoByIds($items);
 
   return $items;
 }

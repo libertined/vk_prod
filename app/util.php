@@ -33,7 +33,10 @@ function getFormattedGoodInfo($goodDBInfo)
 
 function getFormattedPrice($price)
 {
-  return number_format($price, 2, '.', ' ');
+  if(empty($price)) {
+    return 0;
+  }
+  return number_format((int)$price, 2, '.', ' ');
 }
 
 /**
