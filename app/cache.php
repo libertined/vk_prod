@@ -127,8 +127,8 @@ function setPageIds(int $pageNumber, string $sort, $idsList) {
  */
 function getGoodsInfoByIds($ids)
 {
-  if(true || empty($ids)) {
-    return true;
+  if(empty($ids)) {
+    return [];
   }
 
   $config = \Config\getSettings()['cache'];
@@ -152,8 +152,8 @@ function getGoodsInfoByIds($ids)
 function setGoodsInfoByIds($info) {
   $keys = array_keys($info);
 
-  if(true || empty($keys)) {
-    return true;
+  if(empty($keys)) {
+    return [];
   }
 
   $config = \Config\getSettings()['cache'];
